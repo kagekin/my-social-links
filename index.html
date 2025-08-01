@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socialnoba - KAGEKIN ver.</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        /* Custom styles */
+        :root {
+            --bg-color: #0d0d1a;
+            --primary-neon: #00f6ff;
+            --secondary-neon: #ff00ff;
+            --accent-neon: #39ff14;
+            --text-color: #e0e0e0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Rajdhani', 'Noto Sans JP', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .neon-text-primary { color: var(--primary-neon); text-shadow: 0 0 5px var(--primary-neon), 0 0 10px var(--primary-neon), 0 0 20px var(--primary-neon); }
+        .neon-text-secondary { color: var(--secondary-neon); text-shadow: 0 0 5px var(--secondary-neon), 0 0 10px var(--secondary-neon), 0 0 20px var(--secondary-neon); }
+        .neon-text-accent { color: var(--accent-neon); text-shadow: 0 0 5px var(--accent-neon), 0 0 10px var(--accent-neon), 0 0 15px var(--accent-neon); }
+
+        .section-title { font-size: 2.5rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+        .section-subtitle { font-size: 1.25rem; font-weight: 500; letter-spacing: 0.05em; }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: var(--primary-neon); border-radius: 4px; box-shadow: 0 0 5px var(--primary-neon); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--secondary-neon); }
+        
+        .card { background: rgba(20, 20, 40, 0.5); border: 1px solid rgba(0, 246, 255, 0.2); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transition: all 0.3s ease; }
+        .card:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 0 20px var(--primary-neon); border-color: var(--primary-neon); }
+
+        .social-btn { display: flex; align-items: center; justify-content: center; padding: 0.75rem; border-radius: 0.5rem; font-size: 1.1rem; font-weight: bold; transition: all 0.3s ease; transform-origin: center; border: 2px solid transparent; }
+        .social-btn:hover { transform: scale(1.05); box-shadow: 0 0 15px currentColor; }
+        .social-btn svg { width: 28px; height: 28px; margin-right: 0.75rem; flex-shrink: 0; }
+        .social-btn span { flex-shrink: 0; }
+        .btn-x { color: #fff; background-color: #1DA1F2; border-color: #1DA1F2; }
+        .btn-messenger { color: #fff; background-color: #0084ff; border-color: #0084ff; }
+        .btn-instagram { color: #fff; background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); border-color: #e1306c; }
+        .btn-line { color: #fff; background-color: #06C755; border-color: #06C755; }
+        .btn-youtube { color: #fff; background-color: #FF0000; border-color: #FF0000; }
+        .btn-note { color: #fff; background-color: #41c9b4; border-color: #41c9b4; }
+
+        #animation-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 10; overflow: hidden; }
+        .anim-char { position: absolute; font-size: 2rem; opacity: 0; will-change: transform, opacity; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div id="animation-layer"></div>
+
+    <div id="main-content" class="opacity-0">
+        <header class="w-full p-4 fixed top-0 left-0 z-40 bg-gradient-to-b from-black/80 to-transparent">
+             <div class="container mx-auto flex justify-between items-center">
+                 <h1 class="text-2xl font-bold neon-text-primary uppercase">Socialnoba</h1>
+                 <p class="text-lg neon-text-secondary">Kagekin ver.</p>
+             </div>
+        </header>
+
+        <main class="container mx-auto px-4 pt-24 relative z-20">
+
+            <!-- SECTION 00: HERO / FIRST CONTACT -->
+            <section id="hero" class="min-h-screen flex flex-col items-center justify-center text-center">
+                <div class="animate-item">
+                    <h2 class="text-4xl md:text-5xl font-bold neon-text-primary">さあ、交流を始めよう！✨</h2>
+                    <p class="mt-4 mb-8 text-xl md:text-2xl neon-text-accent">未来の居場所を共創するWeb名刺</p>
+                </div>
+                
+                <div class="card p-8 rounded-lg animate-item w-full max-w-md">
+                    <img src="https://pbs.twimg.com/profile_images/1905651963158835200/M06q-esr_400x400.jpg" alt="カゲキンアイコン" class="rounded-full w-32 h-32 mx-auto mb-4 border-4 border-secondary-neon shadow-lg shadow-secondary-neon/50">
+                    <h3 class="text-3xl font-bold neon-text-secondary">カゲキン 🐱</h3>
+                    <p class="text-lg opacity-80 mb-6">狂気のマッドバーチャリスト</p>
+                    <div class="space-y-4">
+                        <a href="https://x.com/kgkn42" target="_blank" class="social-btn btn-x"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg><span>X / Twitter</span></a>
+                        <a href="https://m.me/kgkn42?hash=AbaV2yU5lcjMxHZ-&source_id=8585216" target="_blank" class="social-btn btn-messenger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z"/></svg><span>Messenger</span></a>
+                        <a href="https://www.instagram.com/kagekintv" target="_blank" class="social-btn btn-instagram"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg><span>Instagram</span></a>
+                        <a href="https://line.me/ti/p/dfD-jjSC-W" target="_blank" class="social-btn btn-line"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.3 6.7a8.8 8.8 0 0 0-10.6 0 6.5 6.5 0 0 0-1.7 4.6c0 3.8 3.1 7.2 7.1 7.2a8.1 8.1 0 0 0 5.1-1.7 6.5 6.5 0 0 0 1.7-4.6 8.8 8.8 0 0 0-1.6-4.5z"/><path d="M9.5 12.8h.6a1.9 1.9 0 0 0 1.9-1.9v-.2a1.9 1.9 0 0 0-1.9-1.9h-.6a1.9 1.9 0 0 0-1.9 1.9v.2a1.9 1.9 0 0 0 1.9 1.9z"/><path d="M14.5 12.8h.6a1.9 1.9 0 0 0 1.9-1.9v-.2a1.9 1.9 0 0 0-1.9-1.9h-.6a1.9 1.9 0 0 0-1.9 1.9v.2a1.9 1.9 0 0 0 1.9 1.9z"/></svg><span>LINE</span></a>
+                        <a href="https://youtube.com/@kagekintv" target="_blank" class="social-btn btn-youtube"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17Z"/><path d="m10 15 5-3-5-3z"/></svg><span>YouTube</span></a>
+                        <a href="https://note.com/kgkn42" target="_blank" class="social-btn btn-note"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5zm4 0v14h10V5H8z"/></svg><span>note</span></a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 01: ABOUT SOCIALNOVA -->
+            <section id="about" class="py-20 text-center">
+                <h2 class="section-title neon-text-primary animate-item">ABOUT SOCIALNOVA</h2>
+                <p class="mt-4 mb-8 text-xl animate-item">私たちは「面白さ」で世界を繋ぐクリエイター集団です。</p>
+                <div class="max-w-3xl mx-auto animate-item">
+                    <p class="text-2xl font-bold neon-text-secondary">MISSION: 「あなたとともに未来の居場所を作る」</p>
+                    <p class="mt-4 text-lg">プラットフォームがメタバースなんじゃない。<br>ヒトと、祭りと、居場所こそが、メタバースだ！</p>
+                </div>
+            </section>
+
+            <!-- SECTION 02: ACTIVITIES -->
+            <section id="services" class="py-20">
+                <h2 class="section-title text-center neon-text-primary animate-item">OUR ACTIVITIES</h2>
+                <p class="mt-4 mb-12 text-center text-xl animate-item">私たちが提供する3つの体験価値</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="card p-6 rounded-lg text-center animate-item">
+                        <div class="text-5xl mb-4 neon-text-secondary">🎉</div>
+                        <h3 class="text-2xl font-bold">イベントプロデュース</h3>
+                        <p class="mt-2 opacity-80">記憶に残るメタバースイベントを企画・運営。新たな熱狂を生み出します。</p>
+                    </div>
+                    <div class="card p-6 rounded-lg text-center animate-item">
+                        <div class="text-5xl mb-4 neon-text-secondary">🤝</div>
+                        <h3 class="text-2xl font-bold">コミュニティビルディング</h3>
+                        <p class="mt-2 opacity-80">熱量あるファンコミュニティを構築・活性化。あなたの「居場所」を創ります。</p>
+                    </div>
+                    <div class="card p-6 rounded-lg text-center animate-item">
+                        <div class="text-5xl mb-4 neon-text-secondary">🌐</div>
+                        <h3 class="text-2xl font-bold">ワールドクリエイション</h3>
+                        <p class="mt-2 opacity-80">物語と体験を重視したメタバースワールドを制作。世界観に没入させます。</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 03: ACHIEVEMENTS -->
+            <section id="evidence" class="py-20">
+                <h2 class="section-title text-center neon-text-primary animate-item">ACHIEVEMENTS</h2>
+                <p class="mt-4 mb-12 text-center text-xl animate-item">活動の記録</p>
+                <div class="max-w-4xl mx-auto space-y-8">
+                    <div class="card flex flex-col md:flex-row items-center p-4 rounded-lg animate-item">
+                        <img src="https://placehold.co/150x100/0d0d1a/00f6ff?text=TV_ASAHI_LOGO" alt="テレビ朝日ロゴ" class="w-32 h-auto rounded-lg mb-4 md:mb-0 md:mr-6">
+                        <div class="w-full">
+                            <h3 class="text-xl font-bold">テレビ朝日『メタメタ大作戦』『しくじり先生』</h3>
+                            <p class="opacity-80">運営サポート & コミュニケーション活性化施策を担当</p>
+                        </div>
+                    </div>
+                    <div class="card flex flex-col md:flex-row items-center p-4 rounded-lg animate-item">
+                        <img src="https://placehold.co/150x100/0d0d1a/ff00ff?text=META_COMI_LOGO" alt="メタコミロゴ" class="w-32 h-auto rounded-lg mb-4 md:mb-0 md:mr-6">
+                        <div class="w-full">
+                            <h3 class="text-xl font-bold">自社主催 展示即売会『メタコミ』</h3>
+                            <p class="opacity-80">延べ4,035人以上を動員。新たな文化を創出。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 04: ABOUT "ME" -->
+            <section id="about-me" class="py-20">
+                <h2 class="section-title text-center neon-text-primary animate-item">KAGEKIN's CREATIONS</h2>
+                <p class="mt-4 mb-12 text-center text-xl animate-item">個人の創作活動</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="card p-6 rounded-lg animate-item">
+                        <h3 class="text-2xl font-bold neon-text-secondary">World Creation</h3><p class="mt-2 opacity-80">cluster/VRChatで世界を創造。</p>
+                        <img src="https://placehold.co/600x400/0d0d1a/00f6ff?text=WORLD_IMAGE" alt="ワールド制作のイメージ" class="mt-4 rounded-lg">
+                    </div>
+                    <div class="card p-6 rounded-lg animate-item">
+                        <h3 class="text-2xl font-bold neon-text-secondary">Music & Performance</h3><p class="mt-2 opacity-80">存在しないアーティスト、ヘンテコソング。</p>
+                         <img src="https://placehold.co/600x400/0d0d1a/ff00ff?text=MUSIC_IMAGE" alt="音楽活動のイメージ" class="mt-4 rounded-lg">
+                    </div>
+                    <div class="card p-6 rounded-lg animate-item">
+                        <h3 class="text-2xl font-bold neon-text-secondary">Idol Produce</h3><p class="mt-2 opacity-80">バーチャルアイドル「桜兎フルガ」をプロデュース。</p>
+                         <a href="https://otofuruga.pink/" target="_blank"><img src="https://placehold.co/600x400/0d0d1a/39ff14?text=OTOFURUGA" alt="桜兎フルガのイメージ" class="mt-4 rounded-lg"></a>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="text-center py-8 opacity-50 relative z-20">
+            <p>&copy; 2025 Kagekin / Socialnoba. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script type="module">
+        // --- GSAP Animations ---
+        function setupScrollAnimations() {
+            gsap.registerPlugin(ScrollTrigger);
+            gsap.utils.toArray('.animate-item').forEach(item => {
+                gsap.fromTo(item, 
+                    { opacity: 0, y: 50 }, 
+                    { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
+                      scrollTrigger: { trigger: item, start: 'top 85%', toggleActions: 'play none none none' }
+                    }
+                );
+            });
+        }
+
+        // --- Page Load ---
+        function handlePageLoad() {
+            const mainContent = document.getElementById('main-content');
+            window.addEventListener('load', () => {
+                gsap.to(mainContent, { opacity: 1, duration: 0.5 });
+                setupScrollAnimations();
+                startBackgroundAnimations();
+            });
+        }
+
+        // --- Background Animations ---
+        function startBackgroundAnimations() {
+            const layer = document.getElementById('animation-layer');
+
+            function createAnimChar(content, parent, classes = '') {
+                const el = document.createElement('div');
+                el.className = 'anim-char ' + classes;
+                el.innerHTML = content;
+                parent.appendChild(el);
+                return el;
+            }
+
+            function particleAnimation() {
+                 const icons = ['✨', '🎉', '🤝', '🌐', '🎶', '💡'];
+                 const icon = createAnimChar(icons[Math.floor(Math.random() * icons.length)], layer, 'text-2xl');
+                 const startX = Math.random() * window.innerWidth;
+                 const startY = Math.random() * window.innerHeight;
+                 const tl = gsap.timeline({ onComplete: () => { icon.remove(); }});
+                 tl.fromTo(icon, 
+                    { x: startX, y: startY, opacity: 0, scale: 0.5 },
+                    { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.7)' }
+                 ).to(icon, 
+                    { y: startY - 100, opacity: 0, duration: 2 + Math.random() * 2, ease: 'power1.in' },
+                    '+=1'
+                 );
+            }
+
+            function kagekinAnimation() {
+                 const cat = createAnimChar('🐱', layer, 'text-secondary-neon text-5xl');
+                 const tube = createAnimChar('💡', layer, 'text-accent-neon text-3xl');
+                 const smoke = createAnimChar('✨', layer, 'text-primary-neon text-4xl');
+                 const startX = Math.random() * (window.innerWidth - 100) + 50;
+                 const startY = Math.random() * (window.innerHeight - 100) + 50;
+                 const tl = gsap.timeline({ onComplete: () => { cat.remove(); tube.remove(); smoke.remove(); }});
+                 tl.set([cat, tube, smoke], {x: startX, y: startY, opacity: 1})
+                   .to(tube, { y: '-=20', duration: 0.3, repeat: 3, yoyo: true, ease: 'power1.inOut' })
+                   .to(smoke, { scale: 2, opacity: 0, duration: 0.8 }, '-=0.5')
+                   .to([cat, tube], { opacity: 0, duration: 0.5 }, '+=0.2');
+            }
+
+            setInterval(particleAnimation, 1000);
+            setInterval(kagekinAnimation, 12000 + Math.random() * 5000);
+        }
+
+        // --- Initialize everything ---
+        handlePageLoad();
+
+    </script>
+</body>
+</html>
